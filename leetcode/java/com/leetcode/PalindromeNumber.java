@@ -1,4 +1,4 @@
-package com.stack;
+package com.leetcode;
 
 /**
  * Determine whether an integer is a palindromeNumber,without extra space
