@@ -1,16 +1,56 @@
 package com.leetcode;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
 /**
  * Created by rensong.pu on 2016/8/3.
  */
 public class Solution_Aug {
+    public static void main(String[] args) {
+        MyQueue myQueue = new MyQueue();
+        myQueue.push(1);
+        myQueue.push(2);
+//        System.out.println(myQueue.peek());
+        System.out.println(myQueue.stack.size());
+        System.out.println(myQueue.peek());
+        System.out.println(myQueue.stack.remove(0));
+        System.out.println(myQueue.peek());
+
+    }
+
+    /**
+     * 232 Implement Queue using Stacks
+     * æ€è·¯æ˜¯ç”¨ä¸¤ä¸ªstackå°†elementåè½¬æˆqueueçš„å…¥é˜Ÿé¡ºåº
+     */
+    static class MyQueue {
+
+        private Stack<Integer> stack = new Stack<Integer>();
+
+        // Push element x to the back of queue.
+        public void push(int x) {
+            stack.add(new Integer(x));
+        }
+
+        // Removes the element from in front of queue.
+        public void pop() {
+            stack.remove(0);//åˆ é™¤åº•éƒ¨çš„ï¼ˆé˜Ÿå¤´ï¼‰
+        }
+
+        // Get the front element.
+        public int peek() {
+            return stack.firstElement();//å–stackåº•éƒ¨(é˜Ÿå¤´)
+        }
+
+        // Return whether the queue is empty.
+        public boolean empty() {
+            return stack.isEmpty();
+        }
+    }
+
     /**
      * 225 Implement Stack using Queues
-     * ÕâÀïÓÃLinkedList±ÈArrayList¸ü¸ßĞ§
+     * è¿™é‡Œç”¨LinkedListæ¯”ArrayListæ›´é«˜æ•ˆ
      */
     class MyStack {
         private LinkedList<Integer> elements = new LinkedList<Integer>();
@@ -34,48 +74,6 @@ public class Solution_Aug {
         public boolean empty() {
             return elements.size() == 0;
         }
-
-    }
-
-
-    /**
-     * 232 Implement Queue using Stacks
-     * Ë¼Â·ÊÇÓÃÁ½¸östack½«element·´×ª³ÉqueueµÄÈë¶ÓË³Ğò
-     */
-    static class MyQueue {
-
-        private Stack<Integer> stack = new Stack<Integer>();
-
-        // Push element x to the back of queue.
-        public void push(int x) {
-            stack.add(new Integer(x));
-        }
-
-        // Removes the element from in front of queue.
-        public void pop() {
-            stack.remove(0);//É¾³ıµ×²¿µÄ£¨¶ÓÍ·£©
-        }
-
-        // Get the front element.
-        public int peek() {
-            return stack.firstElement();//È¡stackµ×²¿(¶ÓÍ·)
-        }
-
-        // Return whether the queue is empty.
-        public boolean empty() {
-            return stack.isEmpty();
-        }
-    }
-
-    public static void main(String[] args) {
-        MyQueue myQueue = new MyQueue();
-        myQueue.push(1);
-        myQueue.push(2);
-//        System.out.println(myQueue.peek());
-        System.out.println(myQueue.stack.size());
-        System.out.println(myQueue.peek());
-        System.out.println(myQueue.stack.remove(0));
-        System.out.println(myQueue.peek());
 
     }
 
