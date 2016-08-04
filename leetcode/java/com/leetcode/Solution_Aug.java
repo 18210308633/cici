@@ -32,6 +32,27 @@ public class Solution_Aug {
 
     }
 
+
+    /**
+     * 116. Populating Next Right Pointers in Each Node
+     *
+     * @param root
+     */
+    public void connect(TreeLinkNode root) {
+        if (null == root) {
+            return;//递归终止条件
+        }
+        if (null != root.left) {
+            root.left.next = root.right; //1
+            if (root.next != null) {
+                root.right.next = root.next.left; //2
+            }
+        }
+        connect(root.left); //recurse on both child
+        connect(root.right);
+    }
+
+
     public static void main(String[] args) {
 //           MyQueue myQueue = new MyQueue();
 //           myQueue.push(1);
@@ -41,7 +62,7 @@ public class Solution_Aug {
 //           System.out.println(myQueue.peek());
 //           System.out.println(myQueue.stack.remove(0));
 //           System.out.println(myQueue.peek());
-        TreeNode treeNode = new TreeNode(1);
+        /*TreeNode treeNode = new TreeNode(1);
         TreeNode treeNode2 = new TreeNode(2);
         TreeNode treeNode3 = new TreeNode(3);
         TreeNode treeNode4 = new TreeNode(4);
@@ -53,7 +74,8 @@ public class Solution_Aug {
         List<Integer> list = rightSideView(treeNode);
         for (Integer i : list) {
             System.out.println(i);
-        }
+        }*/
+
 
     }
 
@@ -96,6 +118,16 @@ public class Solution_Aug {
         }
     }
 
+
+    class TreeLinkNode {
+        int val;
+        TreeLinkNode left, right, next;
+
+        TreeLinkNode(int x) {
+            this.val = x;
+        }
+    }
+
     /**
      * 225 Implement Stack using Queues
      * 这里用LinkedList比ArrayList更高效
@@ -124,5 +156,6 @@ public class Solution_Aug {
         }
 
     }
+
 
 }
