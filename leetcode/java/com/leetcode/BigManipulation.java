@@ -1,16 +1,11 @@
 package com.leetcode;
 
+import java.util.Map;
+
 /**
  * Created by thinkpad on 2016/8/8.
  */
 public class BigManipulation {
-    public static void main(String[] args) {
-        BigManipulation solution = new BigManipulation();
-        int num = 0;
-//        System.out.println(solution.isPowerOfFour(num));
-        System.out.println(solution.isPowerOfThree(num));
-    }
-
     /**
      * 342. Power of Four
      * warn:without loops/recursion
@@ -60,12 +55,24 @@ public class BigManipulation {
      * @param n
      */
     public boolean isPowerOfThree(int n) {
-        return n > 0 && (n == 1 || (n % 3 == 0 && isPowerOfThree(n / 3)));
+//        return n > 0 && (n == 1 || (n % 3 == 0 && isPowerOfThree(n / 3)));
         /**
          * without loops and recursion
          * 借助Math.log10(n)
          */
-        //   double log = (double) Math.log10(n);  //?
+        // get the base 10 logarithm for x
+        if (n <= 0) {
+            return false;
+        }
+        int power = (int) (Math.log10(n) / Math.log10(3));//power为3为底的指数
+        return Math.log10(3)*power == Math.log10(n);//power是整数说明n为以3为底的指数
+    }
+
+    public static void main(String[] args) {
+        BigManipulation solution = new BigManipulation();
+        int num = 27;
+//        System.out.println(solution.isPowerOfFour(num));
+        System.out.println(solution.isPowerOfThree(num));
     }
 
 }

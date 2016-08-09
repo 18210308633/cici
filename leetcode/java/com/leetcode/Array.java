@@ -1,5 +1,10 @@
 package com.leetcode;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by thinkpad on 2016/8/7.
  */
@@ -11,14 +16,6 @@ public class Array {
      * @param args
      */
 
-
-    public static void main(String[] args) {
-        Array solution = new Array();
-        int[] nums = new int[]{3, 2, 3, 3};
-        int val = 3;
-        int length = solution.removeElement(nums, val);
-        System.out.println("length=>" + length);
-    }
 
     /**
      * 27. Remove Element
@@ -48,4 +45,24 @@ public class Array {
          */
         return i;
     }
+
+    /**
+     * 126. Word Ladder II
+     * 个人思路：构建各个词组间相关的邻接矩阵
+     */
+    public List<List<String>> findLadders(String beginWord, String endWod, Set<String> wordList) {
+        return null;
+    }
+
+
+
+    public static void main(String[] args) {
+        Array solution = new Array();
+//        int[] nums = new int[]{3, 2, 3, 3};
+//        int val = 3;
+//        int length = solution.removeElement(nums, val);
+//        System.out.println("length=>" + length);
+
+    }
+
 }
