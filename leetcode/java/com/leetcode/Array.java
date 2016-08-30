@@ -49,11 +49,11 @@ public class Array {
     /**
      * 126. Word Ladder II
      * 个人思路：构建各个词组间相关的邻接矩阵
+     * 解决方案：BFS，DFS
      */
     public List<List<String>> findLadders(String beginWord, String endWod, Set<String> wordList) {
         return null;
     }
-
 
 
     public static void main(String[] args) {
@@ -62,6 +62,42 @@ public class Array {
 //        int val = 3;
 //        int length = solution.removeElement(nums, val);
 //        System.out.println("length=>" + length);
+        List list1 = new ArrayList<>();
+        list1.add("12");
+        list1.add("abc");
+        List list2 = new ArrayList<>();
+        list2.add("12");
+        list2.add(324);
+        list2.add("abc");
+        CollectionTest collectionTest = new CollectionTest();
+        List lis = collectionTest.jiao(list1, list2);
+        for (int i = 0; i < lis.size(); i++) {
+            System.out.println(lis.get(i).toString());
+        }
+
+    }
+
+
+    /**
+     * 两个集合的交差并
+     */
+    static class CollectionTest {
+
+        //差集
+        public List<Object> cha() {
+            return null;
+        }
+
+        //交集
+        public List<Object> jiao(List<Object> list1, List<Object> list2) {
+            list1.retainAll(list2);
+            return list1;
+        }
+
+        //并集
+        public List<Object> bing() {
+            return null;
+        }
 
     }
 

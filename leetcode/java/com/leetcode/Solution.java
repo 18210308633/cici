@@ -83,7 +83,8 @@ public class Solution {
 
     //81.Search in Rotated Sorted Array II
 
-    //153 Find Minimum in Rotated Sorted Array
+    //153 Find Minimum in Rotated Sorted Array  从小到大
+    // 如果是从大到小则判断逻辑反过来
     public int findMin(int[] nums) {
         int left = 0;
         int right = nums.length - 1;
