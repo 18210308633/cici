@@ -58,6 +58,29 @@
             <artifactId>hive-exec</artifactId>
             <version>0.13.1</version>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <!--svg_png转换-->
+        <!-- svg 生成png格式图片  -->
+        <dependency>
+            <groupId>org.apache.batik</groupId>
+            <artifactId>batik</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis-ext</artifactId>
+            <version>1.3.04</version>
+        </dependency>
+        <!-- svg 生成png格式图片结束  -->
     </dependencies>
     <build>
         <plugins>

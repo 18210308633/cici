@@ -7,11 +7,16 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -53,9 +58,39 @@ public class POITest {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            logger.error("",e);
-            logger.error("",e);
+            logger.error("", e);
+            logger.error("", e);
             System.out.println();
+        }
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        String imgPath = "E://kola.png";
+        insertImg(imgPath, workbook);
+    }
+
+    public static void insertImg(String imgPath, XSSFWorkbook wb) {
+        //将图片转为byteArrayOutStream,便于产生byteArray
+        FileOutputStream fos = null;
+        BufferedImage bufferedImage = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            bufferedImage = ImageIO.read(new File(imgPath));
+            ImageIO.write(bufferedImage, "png", baos);
+            Sheet sheet = wb.createSheet("img");
+            //画图的顶级管理器
+            XSSFDrawing drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
+
+
+            XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 255, 1, 1, 5, 8);
+            anchor.setAnchorType(3);
+            //插入图片
+            int pictureIndex = wb.addPicture(baos.toByteArray(), XSSFWorkbook.PICTURE_TYPE_PNG);
+            drawing.createPicture(anchor, pictureIndex);
+            fos = new FileOutputStream("E://img.xlsx");
+            wb.write(fos);
+            System.out.println("Excel生成完成");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
