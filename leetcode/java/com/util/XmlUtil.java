@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * xml工具类
@@ -90,49 +92,80 @@ public class XmlUtil {
 
     //设置clip-path属性值为none
     public static void clipPathNone(Node root) {
+        List<Node> nodes = new ArrayList<>();
+        getNodeByClass(root, "highcharts-series-group", nodes); //针对折线图的属性，后续找规律，做修改针对所有图形
+        if (null == nodes) {
+            return;
+        }
+        NodeList nodeList2 = nodes.get(0).getChildNodes();
+        for (int j = 0; j < nodeList2.getLength(); j++) {
+            Node node1 = nodeList2.item(j);
+            if (node1.getNodeType() != Node.TEXT_NODE) {
+                NamedNodeMap nodeMap1 = node1.getAttributes();
+                Node clipPath = nodeMap1.getNamedItem("clip-path");
+                if (clipPath != null) {
+                    clipPath.setNodeValue("none");
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 在root节点下根据class属性值定位node节点
+     *
+     * @param root
+     * @param classVal
+     * @param res      存放匹配的class节点
+     */
+    public static void getNodeByClass(Node root, String classVal, List<Node> res) {
         NodeList nodeList = root.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node temp = nodeList.item(i);
-            if (temp.getNodeType() == Node.TEXT_NODE) {
-                continue;
-            }
-            NamedNodeMap nodeMap = temp.getAttributes();
-            Node seriesGroup = nodeMap.getNamedItem("class");
-            if (null != seriesGroup && seriesGroup.getNodeValue().equals("highcharts-series-group")) {
-                System.out.println(seriesGroup.getNodeName() + ":" + seriesGroup.getNodeValue());
-                NodeList nodeList2 = temp.getChildNodes();
-                for (int j = 0; j < nodeList2.getLength(); j++) {
-                    Node node1 = nodeList2.item(j);
-                    if (node1.getNodeType() != Node.TEXT_NODE) {
-                        NamedNodeMap nodeMap1 = node1.getAttributes();
-                        Node clipPath = nodeMap1.getNamedItem("clip-path");
-                        if (clipPath != null) {
-                            clipPath.setNodeValue("none");
-                        }
-                    }
+            if (temp.getNodeType() != Node.TEXT_NODE) {
+                NamedNodeMap nodeMap = temp.getAttributes();
+                Node seriesGroup = nodeMap.getNamedItem("class");
+                if (null != seriesGroup && seriesGroup.getNodeValue().equals(classVal)) {
+                    System.out.println(seriesGroup.getNodeName() + ":" + seriesGroup.getNodeValue());
+                    res.add(temp);
+                } else {
+                    //递归去子节点查找
+                    getNodeByClass(temp, classVal, res);
                 }
             }
-
         }
     }
 
     //处理图例
-    public void legendWork(){
-
+    public void legendWork(Node root, List<String> textVal) {
+        List<Node> temp = new ArrayList<>();
+        getNodeByClass(root, "highcharts-legend", temp);
+        int index = 0;
+        if (temp != null) {
+            List<Node> lengendItem = new ArrayList<>();
+            getNodeByClass(temp.get(0), "highcharts-legend-item", lengendItem);
+            if (lengendItem.size() != textVal.size()) {
+                logger.debug("图例个数有问题！！");
+            }
+            for (Node node : lengendItem) {
+                addElement(node, "text", textVal.get(index++));
+            }
+        }
     }
 
     //给指定节点添加一个节点
     public static Element addElement(Node parent, String tagName, String tagValue) {
         Document doc = parent.getOwnerDocument();
-        Element child = doc.createElement(tagName);
-        child.setNodeValue(tagValue);
-        return child;
+        Element element =  doc.createElement(tagName);
+        element.setTextContent(tagValue);
+        parent.appendChild(element);
+        return element;
     }
 
     //rgba转rgb输出
     public static String rgbTrans(String rgba) {
         rgba = rgba.substring(5, rgba.length() - 1);
-        System.out.println("rgba=>" + rgba);
+        logger.debug("rgba=>" + rgba);
         String[] ss = rgba.split(",");
         opactity = ss[ss.length - 1];
         StringBuilder builder = new StringBuilder("rgb(");
@@ -155,7 +188,7 @@ public class XmlUtil {
             DOMSource domSource = new DOMSource(document);
             //设置编码类型
             transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            StreamResult result = new StreamResult(new FileOutputStream("E://svgout.xml"));
+            StreamResult result = new StreamResult(new FileOutputStream("E://svgout.svg"));
             //将DOM转为xml
             transformer.transform(domSource, result);
         } catch (TransformerConfigurationException e) {

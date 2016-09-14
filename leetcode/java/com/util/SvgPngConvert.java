@@ -95,7 +95,7 @@ public class SvgPngConvert {
     }
 
     public static void main(String[] args) {
-        convert("E://svg2.png", "E://svgout.xml");
+        convert("E://svg2.png", "E://svgout.svg");
     }
 
 }
