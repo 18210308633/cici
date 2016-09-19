@@ -24,19 +24,26 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * xml工具类
+ * 增加节点，修改节点属性值等操作
  * Created by rensong.pu on 2016/9/13.
  */
 public class XmlUtil {
     private static String opactity = ""; //存放opacity属性值
     private String xmlPath = null;
+    private InputStream inputStream = null;
     private Document document = null;
     private Element root = null;
     private static final Logger logger = LoggerFactory.getLogger(XmlUtil.class);
+
+    public XmlUtil(InputStream is) {
+        this.inputStream = is;
+    }
 
     public XmlUtil(String xmlPath) {
         this.xmlPath = xmlPath;
@@ -50,7 +57,8 @@ public class XmlUtil {
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             logger.debug("construct document builder success");
-            document = builder.parse(new File(xmlPath));
+//            document = builder.parse(new File(xmlPath));
+            document = builder.parse(inputStream);
             logger.debug("construct xml document success");
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -62,7 +70,7 @@ public class XmlUtil {
     }
 
     //处理rgba
-    public static void rgbWork(Node temp) {
+    public void rgbWork(Node temp) {
         //递归终止
         if (temp.getChildNodes() == null) {
             return;
@@ -82,7 +90,7 @@ public class XmlUtil {
         }
     }
 
-    private static void doRGB(Attr attr, Node parent) {
+    private void doRGB(Attr attr, Node parent) {
         if (null != attr && attr.getNodeValue().contains("rgba")) {
             String rgba = attr.getNodeValue();
             attr.setNodeValue(rgbTrans(rgba));
@@ -91,7 +99,7 @@ public class XmlUtil {
     }
 
     //设置clip-path属性值为none
-    public static void clipPathNone(Node root) {
+    public void clipPathNone(Node root) {
         List<Node> nodes = new ArrayList<>();
         getNodeByClass(root, "highcharts-series-group", nodes); //针对折线图的属性，后续找规律，做修改针对所有图形
         if (null == nodes) {
@@ -118,7 +126,7 @@ public class XmlUtil {
      * @param classVal
      * @param res      存放匹配的class节点
      */
-    public static void getNodeByClass(Node root, String classVal, List<Node> res) {
+    public void getNodeByClass(Node root, String classVal, List<Node> res) {
         NodeList nodeList = root.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node temp = nodeList.item(i);
@@ -154,16 +162,16 @@ public class XmlUtil {
     }
 
     //给指定节点添加一个节点
-    public static Element addElement(Node parent, String tagName, String tagValue) {
+    public Element addElement(Node parent, String tagName, String tagValue) {
         Document doc = parent.getOwnerDocument();
-        Element element =  doc.createElement(tagName);
+        Element element = doc.createElement(tagName);
         element.setTextContent(tagValue);
         parent.appendChild(element);
         return element;
     }
 
     //rgba转rgb输出
-    public static String rgbTrans(String rgba) {
+    public String rgbTrans(String rgba) {
         rgba = rgba.substring(5, rgba.length() - 1);
         logger.debug("rgba=>" + rgba);
         String[] ss = rgba.split(",");
@@ -181,7 +189,7 @@ public class XmlUtil {
     }
 
     //保存为xml文件
-    public static void saveToXml(Document document) {
+    public void saveToXml(Document document) {
         TransformerFactory factory = TransformerFactory.newInstance();
         try {
             Transformer transformer = factory.newTransformer();
@@ -226,5 +234,13 @@ public class XmlUtil {
 
     public static Logger getLogger() {
         return logger;
+    }
+
+    public InputStream getInputStream() {
+        return inputStream;
+    }
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 }

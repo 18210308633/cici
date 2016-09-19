@@ -18,13 +18,13 @@ public class XmlMainTest {
         xmlUtil.buildDoc();
         Document d = xmlUtil.getDocument();
         Node root = d.getFirstChild();
-        XmlUtil.rgbWork(root);//rgb处理
-        XmlUtil.clipPathNone(root);//处理url#
-        List<String> textVal = new ArrayList<>();
+        xmlUtil.rgbWork(root);//rgb处理
+        xmlUtil.clipPathNone(root);//处理url#
+        List<String> textVal = new ArrayList<>(); //图例列表
         textVal.add("新访客-UV");
         textVal.add("老访客-UV");
         xmlUtil.legendWork(root,textVal);
-        XmlUtil.saveToXml(d);
+        xmlUtil.saveToXml(d);
     }
 
 
