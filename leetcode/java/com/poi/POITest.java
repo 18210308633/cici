@@ -100,7 +100,7 @@ public class POITest {
         try {
             Sheet sheet = wb.createSheet("img");
             XSSFDrawing drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
-            XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 255, 1, 1, 5, 8);
+            XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 255, 1, 1, 10, 16);
             anchor.setAnchorType(ClientAnchor.DONT_MOVE_AND_RESIZE);
             drawing.createPicture(anchor, wb.addPicture(os.toByteArray(), Workbook.PICTURE_TYPE_PNG));
             fos = new FileOutputStream("E://test.xlsx");
