@@ -2,9 +2,11 @@ package com.poi;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.FontFamily;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
@@ -18,7 +20,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -33,6 +34,7 @@ public class POITest {
     private static Logger logger = LoggerFactory.getLogger(POITest.class);
 
     public static void main(String[] args) {
+        /*
         XSSFWorkbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("小铺");
         XSSFCellStyle cellStyle = wb.createCellStyle();
@@ -62,7 +64,8 @@ public class POITest {
             logger.error("", e);
             System.out.println();
         }
-
+*/
+        //poi导入图片
         XSSFWorkbook workbook = new XSSFWorkbook();
         String imgPath = "E://kola.png";
         insertImg(imgPath, workbook);
@@ -79,16 +82,29 @@ public class POITest {
             Sheet sheet = wb.createSheet("img");
             //画图的顶级管理器
             XSSFDrawing drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
-
-
             XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 255, 1, 1, 5, 8);
-            anchor.setAnchorType(3);
+//            anchor.setAnchorType(3);
             //插入图片
             int pictureIndex = wb.addPicture(baos.toByteArray(), XSSFWorkbook.PICTURE_TYPE_PNG);
-            drawing.createPicture(anchor, pictureIndex);
+            drawing.createPicture(anchor, pictureIndex).resize(1); //设置图片原始尺寸大小,其中resize是放大或缩小的函数。用了这个函数后，HSSFClientAnchor构造函数中的图片显示的终了cell位置就不起作用了
             fos = new FileOutputStream("E://img.xlsx");
             wb.write(fos);
             System.out.println("Excel生成完成");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertImg(ByteArrayOutputStream os, XSSFWorkbook wb) {
+        FileOutputStream fos = null;
+        try {
+            Sheet sheet = wb.createSheet("img");
+            XSSFDrawing drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
+            XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 255, 1, 1, 5, 8);
+            anchor.setAnchorType(ClientAnchor.DONT_MOVE_AND_RESIZE);
+            drawing.createPicture(anchor, wb.addPicture(os.toByteArray(), Workbook.PICTURE_TYPE_PNG));
+            fos = new FileOutputStream("E://test.xlsx");
+            wb.write(fos);
         } catch (IOException e) {
             e.printStackTrace();
         }

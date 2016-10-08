@@ -1,4 +1,4 @@
-package com.LinkedList;
+package com.Collections;
 
 /**
  * 左神在牛客网直播的一道题

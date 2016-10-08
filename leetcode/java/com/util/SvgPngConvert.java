@@ -1,5 +1,6 @@
 package com.util;
 
+import com.poi.POITest;
 import org.apache.batik.apps.rasterizer.DestinationType;
 import org.apache.batik.apps.rasterizer.SVGConverter;
 import org.apache.batik.apps.rasterizer.SVGConverterException;
@@ -9,13 +10,12 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.batik.util.XMLResourceDescriptor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import javax.print.Doc;
-import javax.xml.crypto.dsig.Transform;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -201,8 +201,14 @@ public class SvgPngConvert {
         return orignSvg;
     }
 
+    /**
+     * 输入svgCode
+     * 输出 excel
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        File file = new File("E://svgdemo2.svg");
+        File file = new File("E://svgdemo3.svg");
         String svgCode = null;
         try (InputStream is = new FileInputStream(file)) {
             BufferedReader bf = new BufferedReader(new InputStreamReader(is, "utf-8"));
@@ -218,9 +224,13 @@ public class SvgPngConvert {
             e.printStackTrace();
         }
         System.out.println(svgCode); //输入内容svgCode
-        convertToPng(workXml(svgCode), "E://svgout2.png");
-
-
+//        convertToPng(workXml(svgCode), "E://svgout3.png");
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        convertToPng(workXml(svgCode), outputStream);
+//        //将图片svgout3.png，写入excel
+        XSSFWorkbook workbook = new XSSFWorkbook();
+//        POITest.insertImg("E://svgout3.png",workbook);
+        POITest.insertImg(outputStream, workbook);
     }
 
 }

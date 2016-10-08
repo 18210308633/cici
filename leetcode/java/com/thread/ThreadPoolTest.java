@@ -2,8 +2,13 @@ package com.thread;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rensong.pu on 2016/9/19.
@@ -15,9 +20,36 @@ public class ThreadPoolTest {
         int pid = getPid();
         System.out.println(pid);
         int i = 0;
-        for (int j = 0; j < 100; j++) {
-            new ThreadPoolTest().runPool();
+        List<Callable<String>> tasks = new ArrayList<>();
+        for (int j = 0; j < 10; j++) {
+            Callable<String> callable = new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    return "helloWorld";
+                }
+            };
+            tasks.add(callable);
+//            new ThreadPoolTest().runPool();
         }
+        List<Future<String>> list = invokeAll(tasks);
+        for (Future<String> status : list) {
+            System.out.println("cancel:" + status.isCancelled() + " isdone:" + status.isDone());
+        }
+
+    }
+
+    public static List<Future<String>> invokeAll(List<Callable<String>> tasks) {
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        try {
+            return executorService.invokeAll(tasks, 1, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            if(executorService!=null){
+                executorService.shutdown();
+            }
+        }
+        return null;
     }
 
     public void runPool() {
