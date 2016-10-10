@@ -68,10 +68,10 @@ public class POITest {
         //poi导入图片
         XSSFWorkbook workbook = new XSSFWorkbook();
         String imgPath = "E://kola.png";
-        insertImg(imgPath, workbook);
+        insertImg(imgPath, workbook, 1, 1);
     }
 
-    public static void insertImg(String imgPath, XSSFWorkbook wb) {
+    public static void insertImg(String imgPath, XSSFWorkbook wb, int rowCell, int colCell) {
         //将图片转为byteArrayOutStream,便于产生byteArray
         FileOutputStream fos = null;
         BufferedImage bufferedImage = null;
@@ -82,7 +82,7 @@ public class POITest {
             Sheet sheet = wb.createSheet("img");
             //画图的顶级管理器
             XSSFDrawing drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
-            XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 255, 1, 1, 5, 8);
+            XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 255, rowCell, colCell, 5, 8);
 //            anchor.setAnchorType(3);
             //插入图片
             int pictureIndex = wb.addPicture(baos.toByteArray(), XSSFWorkbook.PICTURE_TYPE_PNG);
@@ -95,16 +95,19 @@ public class POITest {
         }
     }
 
-    public static void insertImg(ByteArrayOutputStream os, XSSFWorkbook wb) {
+    public static void insertImg(ByteArrayOutputStream[] os, Sheet sheet, int rowCell, int colCell) {
+
         FileOutputStream fos = null;
         try {
-            Sheet sheet = wb.createSheet("img");
             XSSFDrawing drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
-            XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 255, 1, 1, 10, 16);
-            anchor.setAnchorType(ClientAnchor.DONT_MOVE_AND_RESIZE);
-            drawing.createPicture(anchor, wb.addPicture(os.toByteArray(), Workbook.PICTURE_TYPE_PNG));
+            for (int i = 0; i < 2; i++) {
+                XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 0, colCell, rowCell, colCell + 8, rowCell + 22);//15*9的矩形图
+                anchor.setAnchorType(ClientAnchor.MOVE_AND_RESIZE);
+                drawing.createPicture(anchor, sheet.getWorkbook().addPicture(os[i].toByteArray(), Workbook.PICTURE_TYPE_PNG)).resize(1.0/1.12);
+                rowCell = sheet.getLastRowNum() + 15;
+            }
             fos = new FileOutputStream("E://test.xlsx");
-            wb.write(fos);
+            sheet.getWorkbook().write(fos);
         } catch (IOException e) {
             e.printStackTrace();
         }

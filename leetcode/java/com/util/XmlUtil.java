@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class XmlUtil {
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
             if (node.getNodeType() != Node.TEXT_NODE) {
-                System.out.println("--" + node.getNodeName() + ":" + node.getNodeValue());
+//                System.out.println("--" + node.getNodeName() + ":" + node.getNodeValue());
                 NamedNodeMap map = node.getAttributes();
                 Attr fill = (Attr) map.getNamedItem("fill");
                 Attr stroke = (Attr) map.getNamedItem("stroke");
@@ -152,10 +153,11 @@ public class XmlUtil {
             List<Node> lengendItem = new ArrayList<>();
             getNodeByClass(temp.get(0), "highcharts-legend-item", lengendItem);
             if (lengendItem.size() != textVal.size()) {
-                logger.debug("图例个数有问题！！");
+                logger.info("图例个数有问题！！");
+                return;
             }
             for (Node node : lengendItem) {
-                addElement(node, "text", textVal.get(index++));
+                addElement(node, "text", new String(textVal.get(index++).getBytes(Charset.forName("utf-8"))));
             }
         }
     }

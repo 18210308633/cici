@@ -10,6 +10,7 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.batik.util.XMLResourceDescriptor;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -109,6 +111,13 @@ public class SvgPngConvert {
      */
     public static String workXml(String svgCode) {
         String res = null;
+        if(svgCode.length()<500){
+            try {
+                return new String(svgCode.getBytes("utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             InputStream is = new ByteArrayInputStream(svgCode.getBytes("utf-8"));
             XmlUtil xmlUtil = new XmlUtil(is);
@@ -118,8 +127,14 @@ public class SvgPngConvert {
             xmlUtil.rgbWork(root);//rgb处理
             xmlUtil.clipPathNone(root);//处理url#
             List<String> textVal = new ArrayList<>(); //图例列表
-            textVal.add("新访客-UV");
-            textVal.add("老访客-UV");
+//            textVal.add("新访客-UV");
+//            textVal.add("老访客-UV");
+            textVal.add("adpad-订单数");
+            textVal.add("android-订单数");
+            textVal.add("ipad-订单数");
+            textVal.add("iphone-订单数");
+            textVal.add("wap-订单数");
+
             xmlUtil.legendWork(root, textVal);
             xmlUtil.saveToXml(document); //保存处理过的svg文件
             res = docToXml(document);
@@ -178,6 +193,7 @@ public class SvgPngConvert {
             TranscoderInput input = new TranscoderInput(new ByteArrayInputStream(bytes));
             TranscoderOutput output = new TranscoderOutput(os);
             pt.transcode(input, output);
+            logger.info("图片绘制完成");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (TranscoderException e) {
@@ -208,10 +224,10 @@ public class SvgPngConvert {
      * @param args
      */
     public static void main(String[] args) {
-        File file = new File("E://svgdemo3.svg");
+        File file = new File("E://svgbar.svg");
         String svgCode = null;
         try (InputStream is = new FileInputStream(file)) {
-            BufferedReader bf = new BufferedReader(new InputStreamReader(is, "utf-8"));
+            BufferedReader bf = new BufferedReader(new InputStreamReader(is, Charset.forName("utf-8")));
             String line = null;
             StringBuilder sb = new StringBuilder();
             while ((line = bf.readLine()) != null) {
@@ -226,11 +242,15 @@ public class SvgPngConvert {
         System.out.println(svgCode); //输入内容svgCode
 //        convertToPng(workXml(svgCode), "E://svgout3.png");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
         convertToPng(workXml(svgCode), outputStream);
+        convertToPng(workXml(svgCode), outputStream2);
 //        //将图片svgout3.png，写入excel
         XSSFWorkbook workbook = new XSSFWorkbook();
 //        POITest.insertImg("E://svgout3.png",workbook);
-        POITest.insertImg(outputStream, workbook);
+        Sheet sheet = workbook.createSheet("img");
+        ByteArrayOutputStream[] outputStreams = new ByteArrayOutputStream[]{outputStream,outputStream2};
+        POITest.insertImg(outputStreams,sheet, 1, 1);
     }
 
 }

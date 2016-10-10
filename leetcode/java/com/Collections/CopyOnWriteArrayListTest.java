@@ -1,6 +1,5 @@
 package com.Collections;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -46,11 +45,11 @@ public class CopyOnWriteArrayListTest {
         }
 
 
-        list.forEach(e -> {
-//                         list.remove("123");
-                         System.out.println(e.toString());
-                     }
-                    );
+//        list.forEach(e -> {
+////                         list.remove("123");
+//                         System.out.println(e.toString());
+//                     }
+//                    );
 
         System.out.println("-========");
 
@@ -64,11 +63,11 @@ public class CopyOnWriteArrayListTest {
             list.add(str2);
         }
 
-        list.forEach(e -> {
-//                         list.remove("123");
-                         System.out.println(e.toString());
-                     }
-                    );
+//        list.forEach(e -> {
+////                         list.remove("123");
+//                         System.out.println(e.toString());
+//                     }
+//                    );
 
     }
 
