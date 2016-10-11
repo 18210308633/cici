@@ -30,10 +30,10 @@ public class Main {
         @Override
         public void enterValue(ArraryInitParser.ValueContext ctx) {
             if (ctx.INT() == null) {
-                System.out.println(ctx.INT());
-            } else {
-//                System.out.printf("\\u%04x", Integer.valueOf(ctx.INT().getText()));
                 System.out.println(ctx.INT().getText());
+            } else {
+                System.out.printf("\\u%04x", Integer.valueOf(ctx.INT().getText()));
+//                System.out.println(ctx.INT().getText());
             }
         }
     }
@@ -42,7 +42,7 @@ public class Main {
         String sentence = "{1,2,3}";
 //词法分析
         ArraryInitLexer lexer = new ArraryInitLexer(new ANTLRInputStream(sentence));
-        CommonTokenStream tokens = new CommonTokenStream((TokenSource) lexer);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 //语法分析
         ArraryInitParser parser = new ArraryInitParser(tokens);

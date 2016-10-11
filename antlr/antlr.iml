@@ -14,5 +14,7 @@
     <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.4" level="project" />
     <orderEntry type="library" name="org.antlr:antlr4:4.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hive:hive-exec:0.13.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.5" level="project" />
   </component>
 </module>
