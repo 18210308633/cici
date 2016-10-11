@@ -8,13 +8,9 @@ import java.util.List;
  */
 public class A {
     public static void main(String[] args) {
-        List list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        List list2 = new ArrayList<>();
-        list2.add("3");
-        list.removeAll(list2);
+        String sql = "select * from %s";
+        String table = "jiling";
+        System.out.println(String.format(sql,table));
 
     }
 }

@@ -134,7 +134,7 @@ public class XmlUtil {
                 NamedNodeMap nodeMap = temp.getAttributes();
                 Node seriesGroup = nodeMap.getNamedItem("class");
                 if (null != seriesGroup && seriesGroup.getNodeValue().equals(classVal)) {
-                    System.out.println(seriesGroup.getNodeName() + ":" + seriesGroup.getNodeValue());
+//                    System.out.println(seriesGroup.getNodeName() + ":" + seriesGroup.getNodeValue());
                     res.add(temp);
                 } else {
                     //递归去子节点查找
