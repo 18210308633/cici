@@ -1,5 +1,6 @@
 package sqlBase.sqlDesign;
 
+import com.sun.deploy.util.StringUtils;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -8,7 +9,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.apache.commons.lang.StringUtils;
 import sqlBase.gen.SqlBaseListener;
 import sqlBase.gen.SqlLexer;
 import sqlBase.gen.SqlParser;
