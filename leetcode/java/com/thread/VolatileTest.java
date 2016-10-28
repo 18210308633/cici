@@ -20,7 +20,7 @@ public class VolatileTest {
 
     public static void main(String[] args) {
         final VolatileTest va = new VolatileTest();
-        while(va.x==0){
+        while (va.x == 0||true) {
             Thread thread1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -36,11 +36,11 @@ public class VolatileTest {
                 }
             }, "thread2"
             );
-            thread1.start();
-            thread2.start();
             try {
-                thread1.join();
+                thread2.start();
                 thread2.join();
+                thread1.start();
+                thread1.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

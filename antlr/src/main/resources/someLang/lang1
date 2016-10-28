@@ -1,0 +1,10 @@
+class SomeClass{
+      func1{
+          instruction1
+          instruction2
+      }
+      func2{
+          instruction1
+          instruction2
+      }
+}
