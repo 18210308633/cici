@@ -2,22 +2,13 @@ package com.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.FileNotFoundException;
@@ -60,6 +51,7 @@ public class XmlUtil {
 //            document = builder.parse(new File(xmlPath));
             document = builder.parse(inputStream);
             logger.debug("construct xml document success");
+//            document = builder.parse(new File(xmlPath));
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -197,7 +189,7 @@ public class XmlUtil {
             DOMSource domSource = new DOMSource(document);
             //设置编码类型
             transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            StreamResult result = new StreamResult(new FileOutputStream("E://svgout.svg"));
+            StreamResult result = new StreamResult(new FileOutputStream("F://svgout.svg"));
             //将DOM转为xml
             transformer.transform(domSource, result);
         } catch (TransformerConfigurationException e) {

@@ -42,7 +42,8 @@ public class TestSomeLang {
         System.out.println("======================================\n visitor方式");
 
         // visitor方式遍历
-        SomeClass someClass1 = new SomeLangVisitorParser().parse(parser.classDeclaration());
+        SomeLanguageParser parser2 = getParseTree(code);
+        SomeClass someClass1 = new SomeLangVisitorParser().parse(parser2.classDeclaration());
         System.out.println(gson.toJson(someClass1));
 
     }

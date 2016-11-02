@@ -6,7 +6,11 @@
 
     <groupId>com.prs</groupId>
     <artifactId>test</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>../jbrowser</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -18,6 +22,11 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.8</version>
         </dependency>
         <!--poi end-->
         <dependency>
@@ -52,7 +61,18 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.10</version>
+        </dependency>
         <!-- svg 生成png格式图片结束  -->
+        <!--jbrowser-->
+        <dependency>
+            <groupId>com.machinepublishers</groupId>
+            <artifactId>jbrowserdriver</artifactId>
+            <version>0.17.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

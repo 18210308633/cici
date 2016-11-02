@@ -1,14 +1,10 @@
 package demo;
 
-import antlr.ANTLRLexer;
 import demo.gen.ArraryInitBaseListener;
 import demo.gen.ArraryInitLexer;
 import demo.gen.ArraryInitParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.TokenSource;
-import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 

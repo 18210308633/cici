@@ -13,7 +13,7 @@ import java.util.List;
 public class XmlMainTest {
 
     public static void main(String[] args) {
-        String svgCode = "E://svgdemo.svg";
+        String svgCode = "F://svg.svg";
         XmlUtil xmlUtil = new XmlUtil(svgCode);
         xmlUtil.buildDoc();
         Document d = xmlUtil.getDocument();
