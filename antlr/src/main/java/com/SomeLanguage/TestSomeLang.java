@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.io.FileUtils;
-import someLanguage.SomeLanguageLexer;
+import someLanguage.gen.SomeLanguageLexer;
 import someLanguage.gen.SomeLanguageParser;
 
 import java.io.File;
@@ -31,12 +31,20 @@ import java.net.URISyntaxException;
  */
 public class TestSomeLang {
     public static void main(String[] args) {
+        // listener 方式遍历
         TestSomeLang testSomeLang = new TestSomeLang();
         String code = testSomeLang.readContent();
         SomeLanguageParser parser = getParseTree(code);
-        SomeClass someClass = new LangeParser().parse(parser.classDeclaration());
+        SomeClass someClass = new LangeListenerParser().parse(parser.classDeclaration());
         Gson gson = new Gson();
         System.out.println(gson.toJson(someClass));
+
+        System.out.println("======================================\n visitor方式");
+
+        // visitor方式遍历
+        SomeClass someClass1 = new SomeLangVisitorParser().parse(parser.classDeclaration());
+        System.out.println(gson.toJson(someClass1));
+
     }
 
     public String readContent() {

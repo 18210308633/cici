@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * Created by rensong.pu on 2016/10/28.
  */
-public class LangeParser implements ILangParser {
+public class LangeListenerParser implements ILangParser {
 
     public SomeClass parse(ParseTree parseTree) {
         ClassListener classListener = new ClassListener();
