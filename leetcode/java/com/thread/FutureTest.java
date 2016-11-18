@@ -1,15 +1,15 @@
 //package com.thread;
 //
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Random;
-//import java.util.concurrent.Callable;
-//import java.util.concurrent.ExecutionException;
-//import java.util.concurrent.ExecutorService;
-//import java.util.concurrent.Executors;
-//import java.util.concurrent.Future;
-//import java.util.concurrent.TimeUnit;
-//import java.util.concurrent.TimeoutException;
+//imp java.util.ArrayList;
+//imp java.util.List;
+//imp java.util.Random;
+//imp java.util.concurrent.Callable;
+//imp java.util.concurrent.ExecutionException;
+//imp java.util.concurrent.ExecutorService;
+//imp java.util.concurrent.Executors;
+//imp java.util.concurrent.Future;
+//imp java.util.concurrent.TimeUnit;
+//imp java.util.concurrent.TimeoutException;
 //
 ///**
 // * JAVA1.5后提供了更为方便的线程神器Callable,Future

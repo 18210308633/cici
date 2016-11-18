@@ -8,9 +8,6 @@
     <artifactId>test</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>../jbrowser</module>
-    </modules>
     <dependencies>
         <dependency>
             <groupId>com.h2database</groupId>

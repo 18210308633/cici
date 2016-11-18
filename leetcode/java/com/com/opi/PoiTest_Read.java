@@ -1,12 +1,12 @@
 //package com.com.opi;
 //
-//import org.apache.poi.hssf.usermodel.HSSFRow;
-//import org.apache.poi.hssf.usermodel.HSSFSheet;
-//import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-//import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+//imp org.apache.poi.hssf.usermodel.HSSFRow;
+//imp org.apache.poi.hssf.usermodel.HSSFSheet;
+//imp org.apache.poi.hssf.usermodel.HSSFWorkbook;
+//imp org.apache.poi.poifs.filesystem.POIFSFileSystem;
 //
-//import java.io.FileInputStream;
-//import java.io.IOException;
+//imp java.io.FileInputStream;
+//imp java.io.IOException;
 //
 ///**
 // * Created by thinkpad on 2016/8/11.

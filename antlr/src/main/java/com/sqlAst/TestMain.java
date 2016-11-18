@@ -2,7 +2,6 @@ package com.sqlAst;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import sqlBase.gen.SqlLexer;
 import sqlBase.gen.SqlParser;
@@ -12,7 +11,7 @@ import sqlBase.gen.SqlParser;
  */
 public class TestMain {
     public static void main(String[] args) {
-        String sql = "select * from A as a  where a . xx = XX";
+        String sql = "select * from A,D,G join B on A.xx = B.xx join C on A.xx = C.xx ,A where C.xx = xx";
         /**
          * ==============================
          *   构建sql AST
@@ -27,17 +26,21 @@ public class TestMain {
         SqlParser sqlParser = new SqlParser(commonTokenStream); //Sql.g4生成的parser,方法名对应配置文件中的rule
 
         SqlParser.QueryContext queryContext = sqlParser.query();//获取主查询语句
-
         ParseTreeWalker walker = new ParseTreeWalker();
-        ParseTreeListener listener = new MyParseTreeListener();
+        MyParseTreeListener listener = new MyParseTreeListener();
+//        queryContext.enterRule(listener);
         walker.walk(listener, queryContext);
 
-        MyParseTreeVisitor treeVisitor = new MyParseTreeVisitor();
-        Object o =  treeVisitor.visit(queryContext);
-        System.out.println("= 的内容->"+o.toString());
+        listener.getTableNames().forEach(e ->
+                                                 System.out.println(e)
+                                        );
 
-        System.out.println("sql=>" + SqlAstUtil.astToSql(queryContext));
 
+//        MyParseTreeVisitor treeVisitor = new MyParseTreeVisitor();
+//        Object o =  treeVisitor.visit(queryContext);
+//        System.out.println("= 的内容->"+o.toString());
+//
+//        System.out.println("sql=>" + SqlAstUtil.astToSql(queryContext));
 
 
     }

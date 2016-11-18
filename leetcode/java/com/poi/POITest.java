@@ -183,27 +183,27 @@ public class POITest {
 }
 //package com.poi;
 //
-//import org.apache.poi.ss.usermodel.Cell;
-//import org.apache.poi.ss.usermodel.CellStyle;
-//import org.apache.poi.ss.usermodel.FontFamily;
-//import org.apache.poi.ss.usermodel.Row;
-//import org.apache.poi.ss.usermodel.Sheet;
-//import org.apache.poi.ss.util.CellRangeAddress;
-//import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-//import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-//import org.apache.poi.xssf.usermodel.XSSFDrawing;
-//import org.apache.poi.xssf.usermodel.XSSFFont;
-//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+//imp org.apache.poi.ss.usermodel.Cell;
+//imp org.apache.poi.ss.usermodel.CellStyle;
+//imp org.apache.poi.ss.usermodel.FontFamily;
+//imp org.apache.poi.ss.usermodel.Row;
+//imp org.apache.poi.ss.usermodel.Sheet;
+//imp org.apache.poi.ss.util.CellRangeAddress;
+//imp org.apache.poi.xssf.usermodel.XSSFCellStyle;
+//imp org.apache.poi.xssf.usermodel.XSSFClientAnchor;
+//imp org.apache.poi.xssf.usermodel.XSSFDrawing;
+//imp org.apache.poi.xssf.usermodel.XSSFFont;
+//imp org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//imp org.slf4j.Logger;
+//imp org.slf4j.LoggerFactory;
 //
-//import javax.imageio.ImageIO;
-//import java.awt.image.BufferedImage;
-//import java.io.ByteArrayOutputStream;
-//import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.io.FileOutputStream;
-//import java.io.IOException;
+//imp javax.imageio.ImageIO;
+//imp java.awt.image.BufferedImage;
+//imp java.io.ByteArrayOutputStream;
+//imp java.io.File;
+//imp java.io.FileNotFoundException;
+//imp java.io.FileOutputStream;
+//imp java.io.IOException;
 //
 ///**
 // * javaAPI poi导出 Excel应用

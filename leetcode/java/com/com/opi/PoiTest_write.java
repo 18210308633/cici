@@ -1,11 +1,11 @@
 //package com.com.opi;
 //
-//import org.apache.poi.hssf.usermodel.HSSFCell;
-//import org.apache.poi.hssf.usermodel.HSSFRow;
-//import org.apache.poi.hssf.usermodel.HSSFSheet;
-//import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+//imp org.apache.poi.hssf.usermodel.HSSFCell;
+//imp org.apache.poi.hssf.usermodel.HSSFRow;
+//imp org.apache.poi.hssf.usermodel.HSSFSheet;
+//imp org.apache.poi.hssf.usermodel.HSSFWorkbook;
 //
-//import java.io.FileOutputStream;
+//imp java.io.FileOutputStream;
 //
 //public class PoiTest_write {
 //    static public void main(String[] args) throws Exception {
