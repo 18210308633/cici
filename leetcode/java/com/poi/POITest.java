@@ -1,5 +1,7 @@
 package com.poi;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -8,10 +10,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +27,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 
 /**
  * javaAPI poi导出 Excel应用
@@ -65,10 +73,52 @@ public class POITest {
             System.out.println();
         }
 */
-        //poi导入图片
+  /*      //poi导入图片
         XSSFWorkbook workbook = new XSSFWorkbook();
         String imgPath = "E://kola.png";
         insertImg(imgPath, workbook, 1, 1);
+
+*/
+//        System.out.println(POITest.class.getResource("/htmlcode")); //文件路径
+//        System.out.println(POITest.class.getResource("")); //项目包路径
+        XSSFWorkbook wb = new XSSFWorkbook();
+        POITest poiTest = new POITest();
+        //插入htmlcode
+        try {
+            insertHtmlCode(poiTest.htmlCode(), wb, 1, 1);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public String htmlCode() {
+        try {
+            File file = new File(getClass().getResource("/htmlcode").toURI());
+            File[] fils = file.listFiles();
+            for (File f : fils) {
+                String htmlCode = FileUtils.readFileToString(f);
+                return htmlCode;
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //插入html片段，选择性粘贴到excel中，实现导入图片的功能
+    public static void insertHtmlCode(String htmlCode, XSSFWorkbook wb, int rowCell, int colCell) throws UnsupportedEncodingException {
+        XSSFSheet sheet = wb.createSheet();
+        XSSFCell cell = sheet.createRow(rowCell).createCell(colCell);
+        XSSFRichTextString textString = new XSSFRichTextString(StringUtils.toString(htmlCode.getBytes(Charset.forName("unicode")),"unicode"));
+        cell.setCellValue(textString);
+        try(FileOutputStream fos = new FileOutputStream("E://htmlTest.xlsx")) {
+            sheet.getWorkbook().write(fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void insertImg(String imgPath, XSSFWorkbook wb, int rowCell, int colCell) {
@@ -103,7 +153,7 @@ public class POITest {
             for (int i = 0; i < 2; i++) {
                 XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 0, colCell, rowCell, colCell + 8, rowCell + 22);//15*9的矩形图
                 anchor.setAnchorType(ClientAnchor.MOVE_AND_RESIZE);
-                drawing.createPicture(anchor, sheet.getWorkbook().addPicture(os[i].toByteArray(), Workbook.PICTURE_TYPE_PNG)).resize(1.0/1.12);
+                drawing.createPicture(anchor, sheet.getWorkbook().addPicture(os[i].toByteArray(), Workbook.PICTURE_TYPE_PNG)).resize(1.0 / 1.12);
                 rowCell = sheet.getLastRowNum() + 15;
             }
             fos = new FileOutputStream("E://test.xlsx");
