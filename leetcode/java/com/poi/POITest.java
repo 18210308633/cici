@@ -23,13 +23,24 @@ import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.Charset;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.sql.DriverManager.getConnection;
 
 /**
  * javaAPI poi导出 Excel应用
@@ -83,13 +94,71 @@ public class POITest {
 //        System.out.println(POITest.class.getResource("")); //项目包路径
         XSSFWorkbook wb = new XSSFWorkbook();
         POITest poiTest = new POITest();
+//        System.out.println("是否支持unicode编码->" + Charset.isSupported("unicode"));
         //插入htmlcode
+        int c = 0;
+        XSSFSheet sheet = wb.createSheet("hh");
+        sheet.lockPivotTables();
+        XSSFSheet sheet2 = wb.createSheet("hh2");
+        long cur = System.currentTimeMillis();
         try {
-            insertHtmlCode(poiTest.htmlCode(), wb, 1, 1);
+            for (int r = 0; r < 10; r++) {
+                insertHtmlCode("<table><img src=\"" + poiTest.imgUrl().get(r) + "\" width=\"320\" height = \"320\"/></table>", sheet, r, c);
+                BufferedImage image = ImageIO.read(new BufferedInputStream(new URL(poiTest.imgUrl().get(r)).openStream()));
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                ImageIO.write(image, "jpg", bos);
+                insertImg(bos, sheet2, r * 28, c);
+            }
+            try (FileOutputStream fos = new FileOutputStream("E://htmlTest.xlsx")) {
+                sheet.getWorkbook().write(fos);
+                sheet2.getWorkbook().write(fos);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        System.out.println("导出总耗时"+(System.currentTimeMillis()-cur));
+    }
 
+    public List<String> imgUrl() {
+        List<String> imgurls = new ArrayList<>();
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull";
+            String user = "root";
+            String pwd = "root";
+            con = getConnection(url, user, pwd);
+            try (Statement state = con.createStatement()) {
+                try (ResultSet rs = state.executeQuery("SELECT * FROM dim_prod_goods")) {
+                    while (rs.next()) {
+                        imgurls.add(
+                                            rs.getString("pic_url")
+
+                                   );
+                    }
+                }
+            }
+            return imgurls;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 
     public String htmlCode() {
@@ -109,16 +178,11 @@ public class POITest {
     }
 
     //插入html片段，选择性粘贴到excel中，实现导入图片的功能
-    public static void insertHtmlCode(String htmlCode, XSSFWorkbook wb, int rowCell, int colCell) throws UnsupportedEncodingException {
-        XSSFSheet sheet = wb.createSheet();
+    public static void insertHtmlCode(String htmlCode, XSSFSheet sheet, int rowCell, int colCell) throws UnsupportedEncodingException {
         XSSFCell cell = sheet.createRow(rowCell).createCell(colCell);
-        XSSFRichTextString textString = new XSSFRichTextString(StringUtils.toString(htmlCode.getBytes(Charset.forName("unicode")),"unicode"));
+        XSSFRichTextString textString = new XSSFRichTextString(StringUtils.toString(htmlCode.getBytes(Charset.forName("unicode")), "unicode"));
+        cell.setCellType(XSSFCell.CELL_TYPE_STRING);
         cell.setCellValue(textString);
-        try(FileOutputStream fos = new FileOutputStream("E://htmlTest.xlsx")) {
-            sheet.getWorkbook().write(fos);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void insertImg(String imgPath, XSSFWorkbook wb, int rowCell, int colCell) {
@@ -146,7 +210,6 @@ public class POITest {
     }
 
     public static void insertImg(ByteArrayOutputStream[] os, Sheet sheet, int rowCell, int colCell) {
-
         FileOutputStream fos = null;
         try {
             XSSFDrawing drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
@@ -163,13 +226,19 @@ public class POITest {
         }
     }
 
+    public static void insertImg(ByteArrayOutputStream os, Sheet sheet, int rowCell, int colCell) {
+        System.out.println("开始写入的行：" + rowCell + "  ");
+        XSSFDrawing drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
+        XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 255, 0, colCell, rowCell, colCell + 8, rowCell + 22);//15*9的矩形图
+        anchor.setAnchorType(ClientAnchor.MOVE_AND_RESIZE);
+        drawing.createPicture(anchor, sheet.getWorkbook().addPicture(os.toByteArray(), Workbook.PICTURE_TYPE_PNG)).resize(1.0 / 1.12);
+    }
+
 
     public static void insertToHeader(Sheet sheet, Integer lastRow) {
         Cell headerCell = sheet.createRow(lastRow).createCell(0);
         headerCell.setCellValue("XXXXX表");
         sheet.addMergedRegion(new CellRangeAddress(lastRow, lastRow, 0, columnLength - 1));
-
-
         CellStyle cellStyle2 = sheet.getWorkbook().createCellStyle();
         XSSFFont font2 = (XSSFFont) sheet.getWorkbook().createFont();
         font2.setFontHeightInPoints((short) 16);
@@ -178,7 +247,6 @@ public class POITest {
         cellStyle2.setFillForegroundColor((short) 52);
         cellStyle2.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
         headerCell.setCellStyle(cellStyle2);
-
 
         Row rowHeader = sheet.createRow(headerHeight + lastRow);//第i个数据集的表头
         CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
