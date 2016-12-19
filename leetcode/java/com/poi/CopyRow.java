@@ -103,7 +103,7 @@ public class CopyRow {
 
     private static String parseFormula(String pPOIFormula) {
         final String cstReplaceString = "ATTR(semiVolatile)";
-        //$NON-NLS-1$
+        //$NON-NLS-1$k
         StringBuffer result = null;
         int index;
         result = new StringBuffer();
