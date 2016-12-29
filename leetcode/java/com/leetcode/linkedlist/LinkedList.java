@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.leetcode.linkedlist;
 
 /**
  * Created by rensong.pu on 2016/8/11.
