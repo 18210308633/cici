@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.leetcode.solution_aug_2016;
 
 /**
  * Created by rensong.pu on 2016/8/3.

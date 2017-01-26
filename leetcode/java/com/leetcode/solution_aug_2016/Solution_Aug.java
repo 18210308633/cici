@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.leetcode.solution_aug_2016;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

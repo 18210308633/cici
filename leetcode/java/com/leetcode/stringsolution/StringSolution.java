@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.leetcode.stringsolution;
 
 import java.util.HashSet;
 import java.util.Set;

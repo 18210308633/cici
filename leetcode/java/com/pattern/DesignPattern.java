@@ -1,8 +1,17 @@
 package com.pattern;
 
+import com.pattern.command.Command;
+import com.pattern.command.Invoker;
+import com.pattern.command.MyCommand;
+import com.pattern.command.Receiver;
+import com.pattern.iterator.Collections;
+import com.pattern.iterator.IteratorI;
+import com.pattern.iterator.MyCollection;
 import com.pattern.observer.AbstractSubject;
 import com.pattern.observer.MySubject;
 import com.pattern.observer.Observer1;
+import com.pattern.responsityChain.Handler;
+import com.pattern.responsityChain.MyHandler;
 
 /**
  * 设计模式
@@ -65,9 +74,33 @@ public class DesignPattern {
        /* ProxySource so = new ProxySource();
         so.method();*/
 
-        AbstractSubject subject = new MySubject();
+    /*    AbstractSubject subject = new MySubject();
         subject.add(new Observer1());
         subject.operation();
+*/
 
+    /*    Collections collections = new MyCollection();
+        collections.put("凹巴马");
+        collections.put("特离普");
+        collections.put("特离普");
+        collections.put("特离普");
+        collections.put("特离普");
+        collections.put("特离普");
+        IteratorI it = collections.iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }*/
+
+     /*   Receiver receiver = new Receiver();
+        Command command = new MyCommand(receiver);
+        Invoker invoker = new Invoker(command);
+        invoker.action();*/
+
+        MyHandler handler = new MyHandler("h1");
+        MyHandler handler2 = new MyHandler("h2");
+        MyHandler handler3 = new MyHandler("h3");
+        handler.setHandler(handler2);
+        handler2.setHandler(handler3);
+        handler.operation();
     }
 }
