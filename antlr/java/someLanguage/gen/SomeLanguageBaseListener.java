@@ -1,4 +1,4 @@
-// Generated from E:/work_space/LeetCode/cici/antlr/java/javaCode\SomeLanguage.g4 by ANTLR 4.5.3
+// Generated from E:/work_space/LeetCode/cici/antlr/java/someLanguage\SomeLanguage.g4 by ANTLR 4.5.3
 package someLanguage.gen;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -52,6 +52,18 @@ public class SomeLanguageBaseListener implements SomeLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterParameter(SomeLanguageParser.ParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParameter(SomeLanguageParser.ParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMethodName(SomeLanguageParser.MethodNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -71,6 +83,18 @@ public class SomeLanguageBaseListener implements SomeLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInstruction(SomeLanguageParser.InstructionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStr(SomeLanguageParser.StrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStr(SomeLanguageParser.StrContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -1,10 +1,12 @@
 class SomeClass{
-      func1{
+      public void print(String a) {
+          System.out.println(a);          
+      }
+      void func2() {
           instruction1
           instruction2
       }
-      func2{
-          instruction1
-          instruction2
+      public static void main(String[] args){
+        func2();
       }
 }

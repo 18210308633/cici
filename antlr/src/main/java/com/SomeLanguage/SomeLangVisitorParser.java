@@ -41,7 +41,9 @@ public class SomeLangVisitorParser implements ILangParser {
                     .stream()
                     .map(instructionContext -> instructionContext.accept(instructionVisitor))
                     .collect(Collectors.toList());
-            return new Method(ctx.methodName().getText(), instructions);
+            StringBuilder sb = new StringBuilder("");
+            ctx.parameter().forEach(e -> sb.append(e.getText()));
+            return new Method(ctx.methodName().getText(), sb.toString().split(","), instructions);
         }
     }
 

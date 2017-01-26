@@ -1,4 +1,4 @@
-// Generated from E:/work_space/LeetCode/cici/antlr/java/javaCode\SomeLanguage.g4 by ANTLR 4.5.3
+// Generated from E:/work_space/LeetCode/cici/antlr/java/someLanguage\SomeLanguage.g4 by ANTLR 4.5.3
 package someLanguage.gen;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -38,6 +38,13 @@ public class SomeLanguageBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitParameter(SomeLanguageParser.ParameterContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitMethodName(SomeLanguageParser.MethodNameContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -46,4 +53,11 @@ public class SomeLanguageBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitInstruction(SomeLanguageParser.InstructionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStr(SomeLanguageParser.StrContext ctx) { return visitChildren(ctx); }
 }

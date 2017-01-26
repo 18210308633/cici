@@ -7,10 +7,12 @@ import java.util.Collection;
  */
 public class Method {
     private String methodName;
+    private String[] parameters;
     private Collection<Instruction> instructions;
 
-    public Method(String methodName, Collection<Instruction> instructions) {
+    public Method(String methodName, String[] parameters, Collection<Instruction> instructions) {
         this.methodName = methodName;
+        this.parameters = parameters;
         this.instructions = instructions;
     }
 }

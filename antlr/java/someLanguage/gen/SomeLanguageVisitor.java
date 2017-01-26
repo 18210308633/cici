@@ -1,6 +1,5 @@
-// Generated from E:/work_space/LeetCode/cici/antlr/java/javaCode\SomeLanguage.g4 by ANTLR 4.5.3
+// Generated from E:/work_space/LeetCode/cici/antlr/java/someLanguage\SomeLanguage.g4 by ANTLR 4.5.3
 package someLanguage.gen;
-
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -30,6 +29,12 @@ public interface SomeLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethod(SomeLanguageParser.MethodContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SomeLanguageParser#parameter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameter(SomeLanguageParser.ParameterContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SomeLanguageParser#methodName}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -41,4 +46,10 @@ public interface SomeLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitInstruction(SomeLanguageParser.InstructionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SomeLanguageParser#str}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStr(SomeLanguageParser.StrContext ctx);
 }

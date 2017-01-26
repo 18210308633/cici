@@ -16,11 +16,15 @@ options {
  =========================
 */
 classDeclaration : 'class' className '{' (method)* '}';
-className : ID ;
-method : methodName '{' (instruction)+ '}' ;
-methodName : ID ;
-instruction : ID ;
+className : (ID|' ')+;
+method : methodName '(' (parameter)* ')'(' ')*'{' (instruction)+'}' ;
+parameter:instruction|' '|'['|']';
+methodName : (ID|' ')+ ;
+instruction : ID|'.'|'('|')'|';';
+str:STR;
 
-ID : [a-zA-Z0-9]+ ;
+ID : [a-zA-Z0-9|'_']+ ;
+STR:'\'' ('\'\'' | ~('\''))* '\'';
 WS: [ \t\n\r]+ -> skip ;
+
 

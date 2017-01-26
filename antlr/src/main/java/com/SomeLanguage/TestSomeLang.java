@@ -66,7 +66,6 @@ public class TestSomeLang {
         }
         return null;
     }
-//    String someLang =
 
     public static SomeLanguageParser getParseTree(String code) {
         ANTLRInputStream antlrInputStream = new ANTLRInputStream(code);

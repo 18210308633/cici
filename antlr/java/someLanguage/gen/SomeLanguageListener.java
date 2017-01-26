@@ -1,6 +1,5 @@
-// Generated from E:/work_space/LeetCode/cici/antlr/java/javaCode\SomeLanguage.g4 by ANTLR 4.5.3
+// Generated from E:/work_space/LeetCode/cici/antlr/java/someLanguage\SomeLanguage.g4 by ANTLR 4.5.3
 package someLanguage.gen;
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -39,6 +38,16 @@ public interface SomeLanguageListener extends ParseTreeListener {
 	 */
 	void exitMethod(SomeLanguageParser.MethodContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SomeLanguageParser#parameter}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameter(SomeLanguageParser.ParameterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SomeLanguageParser#parameter}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameter(SomeLanguageParser.ParameterContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SomeLanguageParser#methodName}.
 	 * @param ctx the parse tree
 	 */
@@ -58,4 +67,14 @@ public interface SomeLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInstruction(SomeLanguageParser.InstructionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SomeLanguageParser#str}.
+	 * @param ctx the parse tree
+	 */
+	void enterStr(SomeLanguageParser.StrContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SomeLanguageParser#str}.
+	 * @param ctx the parse tree
+	 */
+	void exitStr(SomeLanguageParser.StrContext ctx);
 }
